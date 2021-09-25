@@ -1,0 +1,11 @@
+name: test
+  on:
+    push:
+      - *
+    workflow_dispatch:
+
+jobs:
+  test:
+    - uses: actions/checkout@v2
+    - name: Get Latest Release
+      use: ./
