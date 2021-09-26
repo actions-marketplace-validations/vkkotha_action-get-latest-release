@@ -1,0 +1,30 @@
+name: 'Get latest Github release per branch'
+description: 'Get the latest release on a branch from the repository'
+author: "vkkotha"
+
+branding:
+  icon: 'layers'
+  color: 'green'
+
+inputs:
+  release_tag_prefix:
+    description: 'Prefix for Sem Version Tags'
+    required: true
+    default: 'v'
+  search_scope:
+    description: 'Search scope for searching for releases'
+    required: true
+    default: 'branch'
+outputs:
+  release_id:
+    description: 'Github Release Id'
+  release_tag:
+    description: 'release tag'
+  release_title:
+    description: 'Release title'
+  release_sha:
+    description: 'Release Commit sha'
+
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
