@@ -1,0 +1,15 @@
+name: CI
+  on:
+    push:
+      - main
+    workflow_dispatch:
+
+jobs:
+  test:
+    - uses: actions/checkout@v2
+    - name: Get Latest Release
+      id: latest_release
+      use: ./
+    - name: Validate Output
+      run: |
+        echo 'Latest release: ${{ steps.latest_release.outputs.release_tag }}'
