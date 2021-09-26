@@ -98,7 +98,7 @@ def isValidRelease(release_details):
 
 def setOutputs(latest_release):
     if (latest_release is None):
-        logger.info('Late Release Not Found.')
+        logger.info('Latest Release Not Found.')
         return
 
     logger.info(f'Latest Release Found: {releaseToString(latest_release)}')
