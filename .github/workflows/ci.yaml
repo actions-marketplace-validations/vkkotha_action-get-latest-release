@@ -19,10 +19,20 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
+      - name: Cache pip
+        uses: actions/cache@v2
+        with:
+          # This path is specific to Ubuntu
+          path: ~/.cache/pip
+          # Look to see if there is a cache hit for the corresponding requirements file
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements*.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+            ${{ runner.os }}-
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          python install -r requirements.txt
+          pip install -r requirements.txt
       - name: Test with pytest
         run: |
           pip install -r requirements_test.txt
@@ -33,6 +43,7 @@ jobs:
         with:
           files: junit/**/*.xml
   verify:
+    needs: build
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -43,10 +54,20 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
+      - name: Cache pip
+        uses: actions/cache@v2
+        with:
+          # This path is specific to Ubuntu
+          path: ~/.cache/pip
+          # Look to see if there is a cache hit for the corresponding requirements file
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements*.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+            ${{ runner.os }}-
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          python install -r requirements.txt
+          pip install -r requirements.txt
       - name: Get Latest Release
         id: latest_release
         uses: ./
