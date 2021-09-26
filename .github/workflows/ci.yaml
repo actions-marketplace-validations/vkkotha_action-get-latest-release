@@ -1,8 +1,9 @@
 name: CI
-  on:
-    push:
-      - main
-    workflow_dispatch:
+
+on:
+  push:
+    - main
+  workflow_dispatch:
 
 jobs:
   test:
