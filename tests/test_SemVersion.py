@@ -1,7 +1,7 @@
 import unittest
 import sys
 
-from ..app.sem_version import SemVersion
+from app.sem_version import SemVersion
 
 class TestSemVersion(unittest.TestCase):
 
