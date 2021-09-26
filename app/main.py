@@ -1,9 +1,7 @@
-#!/usr/bin/env python3
-
 import os
 import logging, sys
 from github import Github
-from app.sem_version import SemVersion
+from .sem_version import SemVersion
 
 # Setup logging
 root_log_level = getattr(logging, os.getenv('LOG_LEVEL_ROOT', 'INFO').upper(), logging.INFO)

@@ -14,12 +14,13 @@ inputs:
   search_scope:
     description: 'Search scope for searching for releases'
     required: true
+    # Possible values [ 'all', 'branch' ]
     default: 'branch'
 outputs:
   release_id:
     description: 'Github Release Id'
   release_tag:
-    description: 'release tag'
+    description: 'Release tag'
   release_title:
     description: 'Release title'
   release_sha:

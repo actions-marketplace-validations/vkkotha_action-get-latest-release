@@ -1,11 +1,12 @@
 # Container image that runs your code
 FROM python:alpine
 
-RUN pip install --no-cache-dir pygithub
+ARG requirements=requirements.txt
+COPY requirements*.txt .
 
-VOLUME /app
-WORKDIR /app
-COPY entrypoint.py /app/entrypoint.py
+RUN pip install --no-cache-dir -r $requirements
+RUN rm requirements*.txt
 
-RUN chmod +x /app/entrypoint.py
-ENTRYPOINT ["./entrypoint.py"]
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]

@@ -1,7 +1,7 @@
 import unittest
 import sys
 
-from app.sem_version import SemVersion
+from ..app.sem_version import SemVersion
 
 class TestSemVersion(unittest.TestCase):
 
@@ -88,7 +88,7 @@ class TestSemVersion(unittest.TestCase):
 
     def test_semversion_sort(self):
         lst = [SemVersion('1.2.4'), SemVersion('2.1.2'), SemVersion('1.2.3'), SemVersion('2.0.4')]
-        slst = SemVersion.sort(lst);
+        slst = SemVersion.sort(lst)
 
         self.assertEqual(slst[0].version, lst[2].version)
         self.assertEqual(slst[1].version, lst[0].version)
@@ -97,7 +97,7 @@ class TestSemVersion(unittest.TestCase):
 
     def test_semversion_sort_reverse(self):
         lst = [SemVersion('1.2.4'), SemVersion('2.1.2'), SemVersion('1.2.3'), SemVersion('2.0.4')]
-        slst = SemVersion.sort(lst, reverse=True);
+        slst = SemVersion.sort(lst, reverse=True)
 
         self.assertEqual(slst[0].version, lst[1].version)
         self.assertEqual(slst[1].version, lst[3].version)
