@@ -1,5 +1,5 @@
 ## action-get-latest-release
-**action-get-latest-release**: Gets the latest release info for the current branch from github.
+Gets the latest release info for the current branch from github.
 The release tag output from this action can be used to generate release notes per branch using other release notes/change log generation plugins.
 
 ### Configuration
@@ -11,6 +11,7 @@ The release tag output from this action can be used to generate release notes pe
 |release_tag_prefix|Prefix for Server Version tags.|v|
 |search_scope|Scope in which to search for releases.|branch|
 |max_commits_to_scan|Mac commits to walk before giving up finding the release|500|
+
 Possible values for `search_scope` input
 - *branch*: Looks for release on current branch commits. Release tied to the latest commit with Semantic release tag is used as the latest release.<br>
 - *repo*: Version with the highest Semantic release tag is used across all branches. Time when the release is created is ignored.  
@@ -72,9 +73,10 @@ $ export INPUT_GITHUB_TOKEN=<github PAC>
 
 You can run the action by running ```/entrypoint.sh``` inside container. 
 
-Run Unit tests by running<br>
-```pytest --cache-clear --cov --cov-report=html tests/```
-
+Running Unit tests
+```sh
+$ pytest --cache-clear --cov --cov-report=html tests/
+```
 Your coverage report will be in `htmlcov` folder
  
 ### Submit code
