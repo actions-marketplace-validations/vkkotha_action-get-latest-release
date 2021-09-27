@@ -1,6 +1,7 @@
 ## action-get-latest-release 
 [![CI](https://github.com/vkkotha/action-get-latest-release/actions/workflows/ci.yaml/badge.svg)](https://github.com/vkkotha/action-get-latest-release/actions/workflows/ci.yaml) 
-[![Github All Releases](https://img.shields.io/github/downloads/vkkotha/action-get-latest-release/total.svg)](https://github.com/vkkotha/action-get-latest-release/releases)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/vkkotha/action-get-latest-release)
+![GitHub pull requests](https://img.shields.io/github/issues-pr/vkkotha/action-get-latest-release)
 [![GitHub Issues](https://img.shields.io/github/issues/vkkotha/action-get-latest-release.svg)](https://github.com/vkkotha/action-get-latest-release/issues)
 [![Python 3.9](https://img.shields.io/badge/python-3.9-blue.svg)](https://www.python.org/downloads/release/python-390/)
 
@@ -45,7 +46,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Get Latest Release
         id: latest_release
-        uses: vkkotha/action-get-latest-release@main
+        uses: vkkotha/action-get-latest-release@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
       - name: Use Release Info
