@@ -93,5 +93,11 @@ Your coverage report will be in `htmlcov` folder
 ### Report Defects
 - Submit new issues [Here](https://github.com/vkkotha/action-get-latest-release/issues/new)
 
+## Credits
+- [github-tag-action](https://github.com/anothrNick/github-tag-action)
+- [release-changelog-builder-action](https://github.com/mikepenz/release-changelog-builder-action)
+- [action-bumper](https://github.com/haya14busa/action-bumpr)
+- [actions-github-release](https://github.com/rez0n/actions-github-release)
+
 ## License
 action-get-latest-release is provided under the [Apache License.](https://github.com/vkkotha/action-get-latest-release/blob/master/LICENSE)
