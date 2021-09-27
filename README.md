@@ -1,4 +1,8 @@
-## action-get-latest-release [![CI](https://github.com/vkkotha/action-get-latest-release/actions/workflows/ci.yaml/badge.svg)](https://github.com/vkkotha/action-get-latest-release/actions/workflows/ci.yaml) [![Github All Releases](https://img.shields.io/github/downloads/vkkotha/action-get-latest-release/total.svg)](https://github.com/vkkotha/action-get-latest-release/releases) [![GitHub Issues](https://img.shields.io/github/issues/vkkotha/action-get-latest-release.svg)](https://github.com/vkkotha/action-get-latest-release/issues) [![Python 3.9](https://img.shields.io/badge/python-3.9-blue.svg)](https://www.python.org/downloads/release/python-390/)
+## action-get-latest-release 
+[![CI](https://github.com/vkkotha/action-get-latest-release/actions/workflows/ci.yaml/badge.svg)](https://github.com/vkkotha/action-get-latest-release/actions/workflows/ci.yaml) 
+[![Github All Releases](https://img.shields.io/github/downloads/vkkotha/action-get-latest-release/total.svg)](https://github.com/vkkotha/action-get-latest-release/releases)
+[![GitHub Issues](https://img.shields.io/github/issues/vkkotha/action-get-latest-release.svg)](https://github.com/vkkotha/action-get-latest-release/issues)
+[![Python 3.9](https://img.shields.io/badge/python-3.9-blue.svg)](https://www.python.org/downloads/release/python-390/)
 
 Gets the latest release info for the current branch from github.
 The release tag output from this action can be used to generate release notes per branch using other release notes/change log generation plugins.
