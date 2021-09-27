@@ -71,8 +71,8 @@ jobs:
       - name: Get Latest Release
         id: latest_release
         uses: ./
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
       - name: Validate Output
         run: |
           echo 'Latest release: ${{ steps.latest_release.outputs.release_tag }}'

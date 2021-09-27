@@ -14,16 +14,16 @@ print(f'Using: [root_log_level: { logging.getLevelName(logging.getLogger().getEf
 app_log_level: { logging.getLevelName(logger.getEffectiveLevel()) }]')
 
 # Inputs
-github_token = os.getenv('GITHUB_TOKEN', None)
 github_repository = os.getenv('GITHUB_REPOSITORY')
 branch = os.getenv('GITHUB_REF', 'main')
-input_release_tag_prefix = os.getenv('INPUT_RELEASE_TAG_PREFIX', 'v')
-input_scope = os.getenv('INPUT_SCOPE', 'branch')
+github_token = os.getenv('INPUT_GITHUB_TOKEN', None)
+release_tag_prefix = os.getenv('INPUT_RELEASE_TAG_PREFIX', 'v')
+search_scope = os.getenv('INPUT_SEARCH_SCOPE', 'branch')
 
 def validateInputs():
-    valid_scopes = ['all', 'branch']
-    if (input_scope not in valid_scopes):
-        raise ValueError(f'Invalid input: scope. Valid values {valid_scopes}')
+    valid_scopes = ['repo', 'branch']
+    if (search_scope not in valid_scopes):
+        raise ValueError(f'Invalid input: search_scope. Valid values {valid_scopes}')
 
 def getSemanticTags(repo):
     tags = repo.get_tags()
@@ -32,7 +32,7 @@ def getSemanticTags(repo):
         # Index only tags matching semversion
         try:
             st = SemVersion(t.name)
-            if (st.prefix == input_release_tag_prefix):
+            if (st.prefix == release_tag_prefix):
                 stags[t.name] = { 'tag': t, 'sem_version': st }
         except Exception as e:
             logger.error(e)
@@ -78,13 +78,22 @@ def releaseToString(release_details):
     tag = release_details['tag']
     return f'Release(id: {r.id}, title: {r.title}, draft: {r.draft}, prerelease: {r.prerelease}, tag: {r.tag_name}, commit_sha: {tag.commit.sha[:8]})'
 
-def getLatestRelease(repo, releases):
+def getLatestReleaseForBranch(repo, releases):
     commits = repo.get_commits(sha=branch)
     for c in commits:
         releases_commit_idx = releases['releases_commit_idx']
         release_details = releases_commit_idx.get(c.sha)
         if isValidRelease(release_details):
             return release_details
+
+def getLatestReleaseForRepo(repo, releases):
+    releasesIdx = releases['releases_idx']
+    releasesList = releasesIdx.values()
+    semVersionList = [item['sem_version'] for item in releasesList if 'sem_version' in item]
+    sortedVersions = SemVersion.sort(semVersionList, reverse=True)
+    if (len(sortedVersions) > 0):
+        maxVersion = sortedVersions[0]
+        return releasesIdx.get(maxVersion.version)
 
 def isValidRelease(release_details):
     if (release_details == None):
@@ -117,7 +126,12 @@ def main():
     printTags(tags)
     releases = getSemanticReleases(repo, tags)
     printReleases(releases)
-    latest_release = getLatestRelease(repo, releases)
+    latest_release = None
+    if (search_scope == "branch"):
+        latest_release = getLatestReleaseForBranch(repo, releases)
+    else:
+        latest_release = getLatestReleaseForRepo(repo, releases)
+
     setOutputs(latest_release)
 
 if __name__ == '__main__':
