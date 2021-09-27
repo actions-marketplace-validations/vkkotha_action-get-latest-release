@@ -10,10 +10,14 @@ The release tag output from this action can be used to generate release notes pe
 |github_token|Git hub token. Use `${{ secrets.GITHUB_TOKEN }}` ||
 |release_tag_prefix|Prefix for Server Version tags.|v|
 |search_scope|Scope in which to search for releases.|branch|
+|max_commits_to_scan|Mac commits to walk before giving up finding the release|500|
 Possible values for `search_scope` input
 - *branch*: Looks for release on current branch commits. Release tied to the latest commit with Semantic release tag is used as the latest release.<br>
 - *repo*: Version with the highest Semantic release tag is used across all branches. Time when the release is created is ignored.  
 
+> **_NOTE:_** `max_commits_to_scan` sets the threshold on how many commits your can iterate before giving up finding the release on the branch. 
+> github api rate limits may block you from doing too many requests, specially if you scan public repos with no github_token.
+ 
 #### Outputs
 - `release_id` - Github release Id
 - `release_tag` - Release tag
@@ -44,6 +48,35 @@ jobs:
 ```
 
 ## Contributing
+### Development
+You can use python 3.9 locally to test and run the action.
+All you need to do is set INPUT_GITHUB_TOKEN to your github PAC and run ./entrypoint.sh
+#### Developing in docker container.
+You can build a container with volume mounting to this code and run your code and tests with in the container.
+To Build docker image run<br>
+```sh
+$ docker build -t action-get-latest-release-test \
+    --build-arg requirements=requirements_test.txt .
+```
+Then run a container in shell mode with
+```sh
+$ docker run -it --rm --entrypoint sh --workdir=/github/workspace \
+    -v $(pwd):/github/workspace action-get-latest-release-test
+```
+Once your are inside the container set up the following Environment variables
+```sh
+$ export GITHUB_REPOSITORY=<test repo>
+$ export GITHUB_REF=[main | master | <your branch>]
+$ export INPUT_GITHUB_TOKEN=<github PAC>
+```
+
+You can run the action by running ```/entrypoint.sh``` inside container. 
+
+Run Unit tests by running<br>
+```pytest --cache-clear --cov --cov-report=html tests/```
+
+Your coverage report will be in `htmlcov` folder
+ 
 ### Submit code
 - Fork Repository and Clone.
 - Create feature branch and commit.

@@ -19,11 +19,14 @@ branch = os.getenv('GITHUB_REF', 'main')
 github_token = os.getenv('INPUT_GITHUB_TOKEN', None)
 release_tag_prefix = os.getenv('INPUT_RELEASE_TAG_PREFIX', 'v')
 search_scope = os.getenv('INPUT_SEARCH_SCOPE', 'branch')
+max_commits_to_scan = os.getenv('INPUT_MAX_COMMITS_TO_SCAN', '500')
+commits_to_scan = 100
 
 def validateInputs():
     valid_scopes = ['repo', 'branch']
     if (search_scope not in valid_scopes):
         raise ValueError(f'Invalid input: search_scope. Valid values {valid_scopes}')
+    commits_to_scan = int(max_commits_to_scan)
 
 def getSemanticTags(repo):
     tags = repo.get_tags()
@@ -80,7 +83,12 @@ def releaseToString(release_details):
 
 def getLatestReleaseForBranch(repo, releases):
     commits = repo.get_commits(sha=branch)
+    cnt = 0
     for c in commits:
+        ++cnt
+        if (cnt > commits_to_scan):
+            logger.warn(f'Max Commit scan threshold {commits_to_scan} reached. Please increase the limit.')
+            break;
         releases_commit_idx = releases['releases_commit_idx']
         release_details = releases_commit_idx.get(c.sha)
         if isValidRelease(release_details):
